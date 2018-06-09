@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Logstash Plug-in
+Bundle-SymbolicName: ca.footeware.logstash;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Footeware.ca
+Automatic-Module-Name: ca.footeware.logstash
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.osgi,
+ org.eclipse.equinox.registry,
+ org.eclipse.search,
+ org.eclipse.core.resources
+Export-Package: ca.footeware.logstash.contentproviders,
+ ca.footeware.logstash.wizards

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/ca.footeware.logstash.feature_1.0.0.qualifier.jar" id="ca.footeware.logstash.feature" version="0.0.0">
+      <category name="ca.footeware.logstash.category"/>
+   </feature>
+   <category-def name="ca.footeware.logstash.category" label="Logstash"/>
+</site>
