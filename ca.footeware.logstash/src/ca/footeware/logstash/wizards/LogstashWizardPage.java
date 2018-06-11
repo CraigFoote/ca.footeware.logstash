@@ -52,13 +52,14 @@ public class LogstashWizardPage extends WizardPage {
 		Label parentLabel = new Label(container, SWT.NONE);
 		parentLabel.setText("Parent Project");
 		parentText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		parentText.setEditable(false);
 		parentText.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				validate();
 			}
 		});
-		GridDataFactory.defaultsFor(parentText).applyTo(parentText);
+		GridDataFactory.defaultsFor(parentText).grab(true, false).applyTo(parentText);
 		// display initial selection in text widget
 		if (selection instanceof IStructuredSelection) {
 			IProject project = (IProject) ((IStructuredSelection) selection).getFirstElement();
@@ -113,7 +114,7 @@ public class LogstashWizardPage extends WizardPage {
 
 		// admin port
 		Label portLabel = new Label(container, SWT.NONE);
-		portLabel.setText("Port Number");
+		portLabel.setText("Admin. Port Number");
 		portText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		portText.addKeyListener(new KeyAdapter() {
 			@Override

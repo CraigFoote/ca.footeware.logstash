@@ -4,12 +4,16 @@
 package ca.footeware.logstash.wizards;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -23,6 +27,9 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
+import ca.footeware.logstash.models.UserInput;
+import ca.footeware.logstash.templateengines.FreemarkerTemplateEngine;
 
 /**
  * @author Footeware.ca
@@ -82,25 +89,43 @@ public class NewLogstashConfigWizard extends Wizard implements INewWizard {
 		String name = pageOne.getName();
 		String port = pageOne.getPort();
 		String host = pageOne.getHost();
-		
+
+		UserInput input = new UserInput();
+		input.setName(name);
+		input.setPort(port);
+		input.setHost(host);
+
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        IWorkspaceRoot root = workspace.getRoot();
-        IProject project = root.getProject(parent.getName());
-        IFolder folder = project.getFolder(name);
-        try {
+		IWorkspaceRoot root = workspace.getRoot();
+		IProject project = root.getProject(parent.getName());
+		IFolder folder = project.getFolder(name);
+
+		try {
 			folder.create(true, true, null);
 		} catch (CoreException e) {
-			e.printStackTrace();
+			pageOne.setErrorMessage(e.getMessage());
+			return false;
 		}
-        
-        IFile jvmOptions = folder.getFile("jvm.options");
-        InputStream source = new ByteArrayInputStream("bob".getBytes());
-        try {
-			jvmOptions.create(source, true, null);
+
+		FreemarkerTemplateEngine engine = new FreemarkerTemplateEngine();
+		IFile test = folder.getFile("freemarkertest.txt");
+		try (Writer fileWriter = new FileWriter(test.getRawLocation().makeAbsolute().toFile())) {
+			engine.init("templates");
+			engine.setTemplate("test");
+			engine.process(fileWriter, input);
+			engine.flush();
+		} catch (IOException e) {
+			pageOne.setErrorMessage(e.getMessage());
+			return false;
+		}
+
+		try {
+			folder.refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (CoreException e) {
-			e.printStackTrace();
+			pageOne.setErrorMessage(e.getMessage());
+			return false;
 		}
-		
+
 		return true;
 	}
 

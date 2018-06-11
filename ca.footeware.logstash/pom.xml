@@ -14,4 +14,11 @@
 		<relativePath>../ca.footeware.logstash.parent</relativePath>
 	</parent>
 
+	<build>
+		<resources>
+			<resource>
+				<directory>resources</directory>
+			</resource>
+		</resources>
+	</build>
 </project>
