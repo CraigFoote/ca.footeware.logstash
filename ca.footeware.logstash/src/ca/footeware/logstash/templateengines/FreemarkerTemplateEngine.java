@@ -3,12 +3,13 @@ package ca.footeware.logstash.templateengines;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import freemarker.core.ParseException;
 import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 import freemarker.template.Version;
 
 /**
@@ -34,30 +35,18 @@ public class FreemarkerTemplateEngine {
 		}
 	}
 
-	public void setTemplate(String template) {
-		try {
-			templateCompiler = instance
-					.getTemplate(templatesFolder + File.separatorChar + template + ".ftl");
-		} catch (IOException ex) {
-			Logger.getLogger(FreemarkerTemplateEngine.class.getName()).log(Level.SEVERE, null, ex);
-		}
+	public void setTemplate(String template)
+			throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException {
+		templateCompiler = instance.getTemplate(templatesFolder + File.separatorChar + template + ".ftl");
 	}
 
-	public void process(Writer writer, Object data) {
-		try {
-			templateCompiler.process(data, writer);
-			this.writer = writer;
-		} catch (TemplateException | IOException ex) {
-			Logger.getLogger(FreemarkerTemplateEngine.class.getName()).log(Level.SEVERE, null, ex);
-		}
+	public void process(Writer writer, Object data) throws TemplateException, IOException {
+		templateCompiler.process(data, writer);
+		this.writer = writer;
 	}
 
-	public void flush() {
-		try {
-			this.writer.flush();
-		} catch (IOException ex) {
-			Logger.getLogger(FreemarkerTemplateEngine.class.getName()).log(Level.SEVERE, null, ex);
-		}
+	public void flush() throws IOException {
+		this.writer.flush();
 	}
 
 }

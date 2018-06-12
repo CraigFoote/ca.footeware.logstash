@@ -30,6 +30,7 @@ import org.osgi.framework.FrameworkUtil;
 
 import ca.footeware.logstash.models.UserInput;
 import ca.footeware.logstash.templateengines.FreemarkerTemplateEngine;
+import freemarker.template.TemplateException;
 
 /**
  * @author Footeware.ca
@@ -114,7 +115,7 @@ public class NewLogstashConfigWizard extends Wizard implements INewWizard {
 			engine.setTemplate("test");
 			engine.process(fileWriter, input);
 			engine.flush();
-		} catch (IOException e) {
+		} catch (IOException | TemplateException e) {
 			pageOne.setErrorMessage(e.getMessage());
 			return false;
 		}
