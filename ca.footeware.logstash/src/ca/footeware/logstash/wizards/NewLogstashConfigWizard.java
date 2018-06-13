@@ -3,10 +3,8 @@
  */
 package ca.footeware.logstash.wizards;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Writer;
 import java.net.URL;
 
@@ -109,10 +107,10 @@ public class NewLogstashConfigWizard extends Wizard implements INewWizard {
 		}
 
 		FreemarkerTemplateEngine engine = new FreemarkerTemplateEngine();
-		IFile test = folder.getFile("freemarkertest.txt");
-		try (Writer fileWriter = new FileWriter(test.getRawLocation().makeAbsolute().toFile())) {
-			engine.init("templates");
-			engine.setTemplate("test");
+		IFile log4j = folder.getFile("log4j2.properties");
+		try (Writer fileWriter = new FileWriter(log4j.getRawLocation().makeAbsolute().toFile())) {
+			engine.init("templates"); // template location
+			engine.setTemplate("log4j2.properties"); // .ftl
 			engine.process(fileWriter, input);
 			engine.flush();
 		} catch (IOException | TemplateException e) {
@@ -121,7 +119,7 @@ public class NewLogstashConfigWizard extends Wizard implements INewWizard {
 		}
 
 		try {
-			folder.refreshLocal(IResource.DEPTH_INFINITE, null);
+			parent.refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (CoreException e) {
 			pageOne.setErrorMessage(e.getMessage());
 			return false;

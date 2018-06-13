@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ca.footeware.logstash.target" sequenceNumber="10">
+<?pde version="3.8"?><target name="ca.footeware.logstash.target" sequenceNumber="11">
     <locations>
         <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
             <unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
-            <repository location="jar:file:/home/craig/Downloads/eclipse-R-4.7.3a.zip!/"/>
+            <repository location="http://download.eclipse.org/eclipse/updates/4.8milestones/S-4.8RC4-201806071630/"/>
         </location>
         <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
             <unit id="org.freemarker" version="2.3.22.v20160210-1233"/>
-            <repository location="jar:file:/home/craig/Downloads/orbit-buildrepo-R20180330011457.zip!/"/>
+            <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository"/>
         </location>
     </locations>
     <environment>
