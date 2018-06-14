@@ -37,7 +37,9 @@ public class LogstashWizardPage extends WizardPage {
 
 	/**
 	 * Constructor.
-	 * @param selection {@link IStructuredSelection}
+	 * 
+	 * @param selection
+	 *            {@link IStructuredSelection}
 	 */
 	public LogstashWizardPage(IStructuredSelection selection) {
 		super("Logstash Wizard - Page One");
@@ -131,7 +133,8 @@ public class LogstashWizardPage extends WizardPage {
 			@Override
 			public void verifyText(VerifyEvent e) {
 				char newChar = e.character;
-				if (Character.isDigit(newChar)) {
+				if (Character.isDigit(newChar) || e.keyCode == SWT.BS || e.keyCode == SWT.DEL
+						|| e.keyCode == SWT.ARROW_LEFT || e.keyCode == SWT.ARROW_RIGHT) {
 					e.doit = true;
 				} else {
 					e.doit = false;
@@ -192,7 +195,7 @@ public class LogstashWizardPage extends WizardPage {
 	public String getHost() {
 		return hostText.getText().trim();
 	}
-	
+
 	public String getJira() {
 		return jiraText.getText().trim();
 	}
