@@ -97,6 +97,12 @@
 						<goals>
 							<goal>source-feature</goal>
 						</goals>
+						<configuration>
+                            <excludes>
+                                <plugin id="org.freemarker" />
+                            </excludes>
+                            <labelSuffix></labelSuffix>
+                        </configuration>
 					</execution>
 				</executions>
 			</plugin>

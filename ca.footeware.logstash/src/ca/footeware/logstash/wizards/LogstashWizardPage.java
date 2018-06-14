@@ -33,7 +33,12 @@ public class LogstashWizardPage extends WizardPage {
 	private Text nameText;
 	private Text portText;
 	private Text hostText;
+	private Text jiraText;
 
+	/**
+	 * Constructor.
+	 * @param selection {@link IStructuredSelection}
+	 */
 	public LogstashWizardPage(IStructuredSelection selection) {
 		super("Logstash Wizard - Page One");
 		this.selection = selection;
@@ -147,6 +152,18 @@ public class LogstashWizardPage extends WizardPage {
 		});
 		GridDataFactory.defaultsFor(hostText).span(2, 1).applyTo(hostText);
 
+		// host
+		Label jiraLabel = new Label(container, SWT.NONE);
+		jiraLabel.setText("JIRA Task");
+		jiraText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		jiraText.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				validate();
+			}
+		});
+		GridDataFactory.defaultsFor(jiraText).span(2, 1).applyTo(jiraText);
+
 		// required to avoid an error in the system
 		setControl(container);
 		setPageComplete(false);
@@ -155,7 +172,7 @@ public class LogstashWizardPage extends WizardPage {
 
 	protected void validate() {
 		if (!nameText.getText().trim().isEmpty() && !portText.getText().trim().isEmpty()
-				&& !hostText.getText().trim().isEmpty()) {
+				&& !hostText.getText().trim().isEmpty() && !jiraText.getText().trim().isEmpty()) {
 			setPageComplete(true);
 		}
 	}
@@ -174,6 +191,10 @@ public class LogstashWizardPage extends WizardPage {
 
 	public String getHost() {
 		return hostText.getText().trim();
+	}
+	
+	public String getJira() {
+		return jiraText.getText().trim();
 	}
 
 }

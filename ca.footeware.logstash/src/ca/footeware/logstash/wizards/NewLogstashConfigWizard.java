@@ -88,11 +88,13 @@ public class NewLogstashConfigWizard extends Wizard implements INewWizard {
 		String name = pageOne.getName();
 		String port = pageOne.getPort();
 		String host = pageOne.getHost();
+		String jira = pageOne.getJira();
 
 		UserInput input = new UserInput();
 		input.setName(name);
 		input.setPort(port);
 		input.setHost(host);
+		input.setJira(jira);
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
