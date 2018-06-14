@@ -109,9 +109,10 @@ public class NewLogstashConfigWizard extends Wizard implements INewWizard {
 		}
 
 		FreemarkerTemplateEngine engine = new FreemarkerTemplateEngine();
+		engine.init("templates"); // template location
+		
 		IFile log4j = folder.getFile("log4j2.properties");
 		try (Writer fileWriter = new FileWriter(log4j.getRawLocation().makeAbsolute().toFile())) {
-			engine.init("templates"); // template location
 			engine.setTemplate("log4j2.properties"); // .ftl
 			engine.process(fileWriter, input);
 			engine.flush();
