@@ -1,6 +1,5 @@
 package ca.footeware.logstash.templateengines;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -28,20 +27,20 @@ public class FreemarkerTemplateEngine {
 
 	public void init(String templatesResouceFolder) {
 
-		if (instance == null) {
-			instance = new Configuration(new Version("2.3.22"));
-			instance.setClassForTemplateLoading(this.getClass(), "/");
+		if (this.instance == null) {
+			this.instance = new Configuration(new Version("2.3.22"));
+			this.instance.setClassForTemplateLoading(this.getClass(), "/");
 			this.templatesFolder = templatesResouceFolder;
 		}
 	}
 
 	public void setTemplate(String template)
 			throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException {
-		templateCompiler = instance.getTemplate(templatesFolder + File.separatorChar + template + ".ftl");
+		this.templateCompiler = this.instance.getTemplate(this.templatesFolder + "/" + template + ".ftl");
 	}
 
 	public void process(Writer writer, Object data) throws TemplateException, IOException {
-		templateCompiler.process(data, writer);
+		this.templateCompiler.process(data, writer);
 		this.writer = writer;
 	}
 
