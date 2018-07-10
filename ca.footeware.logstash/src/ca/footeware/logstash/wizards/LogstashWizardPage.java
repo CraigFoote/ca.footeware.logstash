@@ -38,8 +38,7 @@ public class LogstashWizardPage extends WizardPage {
 	/**
 	 * Constructor.
 	 * 
-	 * @param selection
-	 *            {@link IStructuredSelection}
+	 * @param selection {@link IStructuredSelection}
 	 */
 	public LogstashWizardPage(IStructuredSelection selection) {
 		super("Logstash Wizard - Page One");
@@ -130,14 +129,16 @@ public class LogstashWizardPage extends WizardPage {
 			}
 		});
 		portText.addVerifyListener(new VerifyListener() {
+
 			@Override
 			public void verifyText(VerifyEvent e) {
-				char newChar = e.character;
-				if (Character.isDigit(newChar) || e.keyCode == SWT.BS || e.keyCode == SWT.DEL
+				// allow a digit, backspace, delete, or right or left arrow keys
+				if (Character.isDigit(e.character) || e.keyCode == SWT.BS || e.keyCode == SWT.DEL
 						|| e.keyCode == SWT.ARROW_LEFT || e.keyCode == SWT.ARROW_RIGHT) {
 					e.doit = true;
 				} else {
-					e.doit = false;
+					// allow 1 or more pasted digits
+					e.doit = e.text.matches("\\d*");
 				}
 			}
 		});
