@@ -13,8 +13,6 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -128,19 +126,10 @@ public class LogstashWizardPage extends WizardPage {
 				validate();
 			}
 		});
-		portText.addVerifyListener(new VerifyListener() {
-
-			@Override
-			public void verifyText(VerifyEvent e) {
-				// allow a digit, backspace, delete, or right or left arrow keys
-				if (Character.isDigit(e.character) || e.keyCode == SWT.BS || e.keyCode == SWT.DEL
-						|| e.keyCode == SWT.ARROW_LEFT || e.keyCode == SWT.ARROW_RIGHT) {
-					e.doit = true;
-				} else {
-					// allow 1 or more pasted digits
-					e.doit = e.text.matches("\\d*");
-				}
-			}
+		portText.addVerifyListener(e -> {
+			// allow a digit, backspace, delete, or right or left arrow keys
+			e.doit = Character.isDigit(e.character) || e.keyCode == SWT.BS || e.keyCode == SWT.DEL
+					|| e.keyCode == SWT.ARROW_LEFT || e.keyCode == SWT.ARROW_RIGHT || e.text.matches("\\d*");
 		});
 		GridDataFactory.defaultsFor(portText).span(2, 1).applyTo(portText);
 

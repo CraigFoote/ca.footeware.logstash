@@ -26,7 +26,6 @@ public class FreemarkerTemplateEngine {
 	protected Writer writer = null;
 
 	public void init(String templatesResouceFolder) {
-
 		if (this.instance == null) {
 			this.instance = new Configuration(new Version("2.3.22"));
 			this.instance.setClassForTemplateLoading(this.getClass(), "/");
